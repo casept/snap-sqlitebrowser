@@ -1,0 +1,42 @@
+name: sqlitebrowser-casept 
+version: '3.9.1'
+summary: Unofficial snap of the lightweight SQLite DB editing tool. 
+description: |
+  DB Browser for SQLite is a high quality, visual, open source tool to create,
+  design, and edit database files compatible with SQLite.
+  This is an unofficial snap.
+
+apps:
+  sqlitebrowser:
+    command: desktop-launch $SNAP/bin/sqlitebrowser
+    plugs: [x11, home, network]
+
+grade: stable 
+confinement: strict
+
+parts:
+  sqlitebrowser:
+    plugin: qmake
+    qt-version: qt5
+    source: https://github.com/sqlitebrowser/sqlitebrowser/archive/v3.9.1.tar.gz
+    build-packages:
+      - build-essential
+      - qtbase5-dev
+      - libsqlite3-dev
+      - libantlr-dev
+      - libqcustomplot-dev
+      - qttools5-dev
+      - qttools5-dev-tools
+      - libqt5scintilla2-dev
+    stage-packages:
+      - libc6 
+      - libgcc1
+      - libqcustomplot1.3
+      - libqt5network5
+      - libqt5scintilla2-12v5
+      - libsqlite3-0
+      - libstdc++6
+    install: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin/
+      cp src/sqlitebrowser $SNAPCRAFT_PART_INSTALL/bin/
+    after: [desktop-qt5] 
